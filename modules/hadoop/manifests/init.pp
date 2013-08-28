@@ -1,6 +1,7 @@
 class hadoop {
-  $hadoop_version = "1.2.1"
+  $hadoop_version = "2.1.0-beta"
   $hadoop_home = "/opt/hadoop-${hadoop_version}"
+  $hadoop_conf_dir = "${hadoop_home}/etc/hadoop"
 
   file { ["/srv/hadoop/",  "/srv/hadoop/namenode", "/srv/hadoop/datanode/"]:
     ensure => "directory"
@@ -27,58 +28,90 @@ class hadoop {
     require => Exec["download_hadoop"]
   }
 
+  file { "${hadoop_conf_dir}":
+    ensure => "directory",
+    require => Exec["unpack_hadoop"]
+  }
+
   file {
-    "${hadoop_home}/conf/slaves":
+    "${hadoop_conf_dir}/slaves":
       source => "puppet:///modules/hadoop/slaves",
       mode => 644,
       owner => root,
       group => root,
+      require => File["${hadoop_conf_dir}"]
+  }
+
+  file {
+    "${hadoop_home}/bin/start-all.sh":
+      source => "puppet:///modules/hadoop/start-all.sh",
+      mode => 755,
+      owner => root,
+      group => root,
       require => Exec["unpack_hadoop"]
   }
 
   file {
-    "${hadoop_home}/conf/masters":
+    "${hadoop_home}/bin/stop-all.sh":
+      source => "puppet:///modules/hadoop/stop-all.sh",
+      mode => 755,
+      owner => root,
+      group => root,
+      require => Exec["unpack_hadoop"]
+  }
+
+  file {
+    "${hadoop_conf_dir}/masters":
       source => "puppet:///modules/hadoop/masters",
       mode => 644,
       owner => root,
       group => root,
-      require => Exec["unpack_hadoop"]
+      require => File["${hadoop_conf_dir}"]
   }
 
   file {
-    "${hadoop_home}/conf/core-site.xml":
+    "${hadoop_conf_dir}/core-site.xml":
       source => "puppet:///modules/hadoop/core-site.xml",
       mode => 644,
       owner => root,
       group => root,
-      require => Exec["unpack_hadoop"]
+      require => File["${hadoop_conf_dir}"]
   }
 
   file {
-    "${hadoop_home}/conf/mapred-site.xml":
+    "${hadoop_conf_dir}/mapred-site.xml":
       source => "puppet:///modules/hadoop/mapred-site.xml",
       mode => 644,
       owner => root,
       group => root,
-      require => Exec["unpack_hadoop"]
+      require => File["${hadoop_conf_dir}"]
   }
 
   file {
-    "${hadoop_home}/conf/hdfs-site.xml":
+    "${hadoop_conf_dir}/hdfs-site.xml":
       source => "puppet:///modules/hadoop/hdfs-site.xml",
       mode => 644,
       owner => root,
       group => root,
-      require => Exec["unpack_hadoop"]
+      require => File["${hadoop_conf_dir}"]
   }
 
   file {
-    "${hadoop_home}/conf/hadoop-env.sh":
+    "${hadoop_conf_dir}/yarn-site.xml":
+      source => "puppet:///modules/hadoop/yarn-site.xml",
+      mode => 644,
+      owner => root,
+      group => root,
+      require => File["${hadoop_conf_dir}"]
+  }
+
+  file {
+    "${hadoop_conf_dir}/hadoop-env.sh":
       source => "puppet:///modules/hadoop/hadoop-env.sh",
       mode => 644,
       owner => root,
       group => root,
-      require => Exec["unpack_hadoop"]
+      require => File["${hadoop_conf_dir}"]
   }
 
   file { "/etc/profile.d/hadoop-path.sh":

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+      <name>yarn.resourcemanager.address</name>
+      <value>master.local:8032</value>
+  </property>
+  <property>
+      <name>yarn.resourcemanager.scheduler.address</name>
+      <value>master.local:8030</value>
+  </property>
+  <property>
+      <name>yarn.resourcemanager.resource-tracker.address</name>
+      <value>master.local:8031</value>
+  </property>
+  <property>
+      <name>yarn.resourcemanager.admin.address</name>
+      <value>master.local:8033</value>
+  </property>
+  <property>
+      <name>yarn.acl.enable</name>
+      <value>false</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce.shuffle</value>
+    <description>shuffle service that needs to be set for Map Reduce to run </description>
+  </property>
+</configuration>
