@@ -2,11 +2,17 @@ class hadoop {
   $hadoop_version = "2.1.0-beta"
   $hadoop_home = "/opt/hadoop-${hadoop_version}"
   $hadoop_conf_dir = "${hadoop_home}/etc/hadoop"
+  $hadoop_logs_basedir = "$hadoop_home/logs"
+  $hadoop_log_dir  = "${hadoop_logs_basedir}/hadoop"
+  $yarn_log_dir  = "${hadoop_logs_basedir}/yarn"
+  $mapred_log_dir  = "${hadoop_logs_basedir}/mapred"
 
   file { ["/srv/hadoop/",  "/srv/hadoop/namenode", "/srv/hadoop/datanode/"]:
-    ensure => "directory"
+    ensure => "directory",
+    owner => "hdfs",
+    group => "hadoop"
   }
-
+  
   exec { "download_grrr":
     command => "wget --no-check-certificate http://raw.github.com/fs111/grrrr/master/grrr -O /tmp/grrr && chmod +x /tmp/grrr",
     path => $path,
@@ -27,7 +33,34 @@ class hadoop {
     creates => "${hadoop_home}",
     require => Exec["download_hadoop"]
   }
+  
+  file{ $hadoop_logs_basedir:
+    ensure => "directory",
+    group => "hadoop",
+    require => Exec["unpack_hadoop"] 
+  }
 
+  file {$hadoop_log_dir:
+    ensure => "directory",
+    owner => "hdfs",
+    group => "hadoop",
+    require => File[$hadoop_logs_basedir] 
+  }
+
+  file {$yarn_log_dir:
+    ensure => "directory",
+    owner => "yarn",
+    group => "hadoop",
+    require => File[$hadoop_logs_basedir] 
+  }
+
+  file {$mapred_log_dir:
+    ensure => "directory",
+    owner => "mapred",
+    group => "hadoop",
+    require => File[$hadoop_logs_basedir] 
+  }
+  
   file { "${hadoop_conf_dir}":
     ensure => "directory",
     require => Exec["unpack_hadoop"]
@@ -114,10 +147,36 @@ class hadoop {
       require => File["${hadoop_conf_dir}"]
   }
 
+  file {
+    "${hadoop_conf_dir}/yarn-env.sh":
+      source => "puppet:///modules/hadoop/yarn-env.sh",
+      mode => 644,
+      owner => root,
+      group => root,
+      require => File["${hadoop_conf_dir}"]
+  }
+
   file { "/etc/profile.d/hadoop-path.sh":
     content => template("hadoop/hadoop-path.sh.erb"),
     owner => root,
     group => root,
   }
-
+  group { "hadoop":
+      ensure => "present",
+  }
+  user { "hdfs":
+      ensure     => "present",
+      managehome => "true",
+      groups => "hadoop"
+  }
+  user { "yarn":
+      ensure  => "present",
+      managehome => "true",
+      groups => "hadoop"
+  }
+  user { "mapred":
+      ensure  => "present",
+      managehome => "true",
+      groups => "hadoop"
+  }
 }

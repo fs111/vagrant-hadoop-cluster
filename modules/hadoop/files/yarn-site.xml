@@ -26,4 +26,8 @@
     <value>mapreduce.shuffle</value>
     <description>shuffle service that needs to be set for Map Reduce to run </description>
   </property>
+  <property>
+      <name>yarn.nodemanager.resource.memory-mb</name>
+      <value>1024</value>
+  </property>
 </configuration>
