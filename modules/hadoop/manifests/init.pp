@@ -93,6 +93,14 @@ class hadoop {
       require => Exec["unpack_hadoop"]
   }
   file {
+    "${hadoop_home}/bin/fix-permissions.sh":
+      source => "puppet:///modules/hadoop/fix-permissions.sh",
+      mode => 755,
+      owner => root,
+      group => root,
+      require => Exec["unpack_hadoop"]
+  }
+  file {
     "${hadoop_home}/bin/stop-all.sh":
       source => "puppet:///modules/hadoop/stop-all.sh",
       mode => 755,
