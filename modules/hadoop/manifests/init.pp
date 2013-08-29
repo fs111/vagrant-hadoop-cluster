@@ -83,7 +83,15 @@ class hadoop {
       group => root,
       require => Exec["unpack_hadoop"]
   }
-
+  
+  file {
+    "${hadoop_home}/bin/prepare-cluster.sh":
+      source => "puppet:///modules/hadoop/prepare-cluster.sh",
+      mode => 755,
+      owner => root,
+      group => root,
+      require => Exec["unpack_hadoop"]
+  }
   file {
     "${hadoop_home}/bin/stop-all.sh":
       source => "puppet:///modules/hadoop/stop-all.sh",
