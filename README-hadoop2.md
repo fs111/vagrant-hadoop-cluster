@@ -16,8 +16,8 @@ and the job history server is here: http://master.local:19888/jobhistory/
 
 To shut it all down:
 
-   $ vagrant ssh master
-   $ (master) sudo stop-all.sh
-   $ vagrant halt
+    $ vagrant ssh master
+    $ (master) sudo stop-all.sh
+    $ vagrant halt
 
 
