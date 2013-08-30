@@ -67,6 +67,8 @@ Hadoop no longer ships with the `start-all.sh` and `stop-all.sh` scripts, so
 the one in this project are our effort, to make starting and stopping of hadoop
 easier.
 
+The Cascading SDK is currently not part of this setup.
+
 # Open JIRA issues related to this
 
 * https://issues.apache.org/jira/browse/HADOOP-9904
