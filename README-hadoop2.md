@@ -6,7 +6,6 @@
     $ vagrant ssh master
     $ (master) sudo prepare-cluster.sh
     $ (master) sudo start-all.sh
-    $ (master) sudo fix-permissions.sh
 
 The namenode is here: http://master.local:50070/dfshealth.jsp
 
