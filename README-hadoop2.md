@@ -67,6 +67,13 @@ Hadoop no longer ships with the `start-all.sh` and `stop-all.sh` scripts, so
 the one in this project are our effort, to make starting and stopping of hadoop
 easier.
 
+# Open JIRA issues related to this
+
+* https://issues.apache.org/jira/browse/HADOOP-9904
+* https://issues.apache.org/jira/browse/HADOOP-9923
+* https://issues.apache.org/jira/browse/HADOOP-9911
+* <del>https://issues.apache.org/jira/browse/HADOOP-9910</del>
+
 # Further reading
 
 More info on how to run a hadoop 2 cluster, can be found at
