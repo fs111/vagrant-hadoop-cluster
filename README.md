@@ -69,7 +69,7 @@ Once all machines are up and provisioned, the cluster can be started. Log into
 the master, format hdfs and start the cluster.
 
      $ vagrant ssh master
-     $ (master) sudo hadoop namenode -format
+     $ (master) sudo hadoop namenode -format -force
      $ (master) sudo start-all.sh
 
 After a little while, all daemons will be running and you have a fully working
@@ -127,15 +127,14 @@ you. Since everything else is name based, no other change is required.
 ### Command line
 
 To interact with the cluster on the command line, log into the master and
-use the hadoop command as `root`(again, patches welcome).
+use the hadoop command.
 
     $ vagrant ssh master
-    $ (master) sudo -i
     $ (master) hadoop fs -ls /
     $ ...
 
-You can access the host file system from `/vagrant`, which means you can drop
-your hadoop job in there and run it on your own fully distributed hadoop
+You can access the host file system from the `/vagrant` directory, which means that
+you can drop your hadoop job in there and run it on your own fully distributed hadoop
 cluster.
 
 ## Performance
@@ -150,9 +149,8 @@ and 1 reduce task at a time.
 
 ## Cascading SDK
 
-The project supports deploying the [Cascading SDK](http://cascading.org/sdk) on
-the cluster as well.  Puppet will download the Cascading SDK 2.2-wip and put all SDK
-tools into the `PATH`. The SDK itself can be found in `/opt/CascadingSDK`.
+Puppet will download the Cascading SDK 2.2-wip and put all SDK
+tools in the `PATH`. The SDK itself can be found in `/opt/CascadingSDK`.
 
 ## Hacking & Troubleshooting
 
@@ -175,9 +173,14 @@ store it in the `/vagrant` directory, so that the other vms can reuse it. If the
 download fails for some reason, delete the tarball and rerun `vagrant
 provision`.
 
+We are also downloading a file containing checksums for the tarball. They are
+verified, before the cluster is started. If something went wrong during the
+download, you will see the `verify_tarball` part of puppet fail. If that is the
+case, delete the tarball and the checksum file (`<tarball>.mds`) and rerun
+`vagrant provision`.
+
 ## Wishlist
 
 - have it working on windows
 - run as other user than root
 - have a way to configure the names/ips in only one file
-- have a way to define the hadoop version globally

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+md5sum --check  <(grep "MD5 = " $1 | sed -e "s/MD5 = //g;s/ //g" |\
+                   awk -F: '{print tolower($2), "", "/vagrant/"$1}')

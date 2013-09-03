@@ -1,6 +1,8 @@
 class hadoop {
   $hadoop_version = "2.1.0-beta"
   $hadoop_home = "/opt/hadoop-${hadoop_version}"
+  $hadoop_tarball = "hadoop-${hadoop_version}.tar.gz"
+  $hadoop_tarball_checksums = "${hadoop_tarball}.mds"
   $hadoop_conf_dir = "${hadoop_home}/etc/hadoop"
   $hadoop_logs_basedir = "$hadoop_home/logs"
   $hadoop_log_dir  = "${hadoop_logs_basedir}/hadoop"
@@ -20,18 +22,39 @@ class hadoop {
   }
 
   exec { "download_hadoop":
-    command => "/tmp/grrr /hadoop/common/hadoop-${hadoop_version}/hadoop-$hadoop_version.tar.gz -O /vagrant/hadoop.tar.gz --read-timeout=5 --tries=0",
+    command => "/tmp/grrr /hadoop/common/hadoop-${hadoop_version}/$hadoop_tarball -O /vagrant/$hadoop_tarball --read-timeout=5 --tries=0",
     timeout => 1800,
     path => $path,
-    unless => "ls /vagrant | grep hadoop.tar.gz",
+    creates => "/vagrant/$hadoop_tarball",
     require => [ Package["openjdk-6-jdk"], Exec["download_grrr"]]
   }
 
+  exec { "download_checksum":
+    command => "/tmp/grrr /hadoop/common/hadoop-${hadoop_version}/$hadoop_tarball_checksums -O /vagrant/$hadoop_tarball_checksums --read-timeout=5 --tries=0",
+    timeout => 1800,
+    path => $path,
+    unless => "ls /vagrant | grep ${hadoop_tarball_checksums}",
+    require => Exec["download_grrr"],
+  }
+  
+  file { "/tmp/verifier":
+      source => "puppet:///modules/hadoop/verifier",
+      mode => 755,
+      owner => root,
+      group => root,
+  }
+
+  exec{ "verify_tarball":
+    command =>  "/tmp/verifier /vagrant/${hadoop_tarball_checksums}", 
+    path => $path,
+    require => [File["/tmp/verifier"], Exec["download_hadoop"], Exec["download_checksum"]]
+  }
+
   exec { "unpack_hadoop" :
-    command => "tar xf /vagrant/hadoop.tar.gz -C /opt",
+    command => "tar xf /vagrant/${hadoop_tarball} -C /opt",
     path => $path,
     creates => "${hadoop_home}",
-    require => Exec["download_hadoop"]
+    require => Exec["verify_tarball"]
   }
   
   file{ $hadoop_logs_basedir:
