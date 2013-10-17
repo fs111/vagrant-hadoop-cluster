@@ -18,7 +18,9 @@ for slave in $(cat $HADOOP_CONF_DIR/slaves); do
   ssh $slave "su - $YARN_USER -c \"$HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start nodemanager\""
 done
 
-su - $YARN_USER -c "$HADOOP_YARN_HOME/sbin/yarn-daemon.sh start proxyserver --config $HADOOP_CONF_DIR"
+# XXX is optional and it is totally unclear from the docs, that the correct
+# config is, to get this running
+#su - $YARN_USER -c "$HADOOP_YARN_HOME/sbin/yarn-daemon.sh start proxyserver --config $HADOOP_CONF_DIR"
 
 # work around https://issues.apache.org/jira/browse/HADOOP-9923
 NEEDS_STAGING_DIR=$(hadoop fs -test -d /tmp/hadoop-yarn/staging > /dev/null 2>&1)

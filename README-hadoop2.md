@@ -3,9 +3,9 @@
 This is experimental, you have been warned. 
 
 This vagrant hadoop setup is based on [hadoop
-2.1-beta](http://hadoop.apache.org/docs/r2.1.0-beta/hadoop-project-dist/hadoop-common/releasenotes.html).
+2.2.0](http://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/releasenotes.html)
 
-Hadoop itself is installed in `/opt/hadoop-2.1.0-beta`.
+Hadoop itself is installed in `/opt/hadoop-2.2.0`.
 
 ## Getting started
 
@@ -24,6 +24,11 @@ To start the various services in the cluster, do this:
 * `start-all.sh` starts all services (local and remote) in the right oder as the
  right user. 
 
+For some reason, the dfs is no longer creating the "home" directory of a user. You will
+have to create that yourself with `hadoop fs -mkdir -p /user/vagrant`.
+
+You can test the cluster by running the example apps: 
+    hadoop jar /opt/hadoop-2.2.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar
 
 ## Webinterfaces of the services
 
@@ -79,4 +84,4 @@ The Cascading SDK is currently not part of this setup.
 # Further reading
 
 More info on how to run a hadoop 2 cluster, can be found at
-[apache](http://hadoop.apache.org/docs/r2.1.0-beta/hadoop-project-dist/hadoop-common/ClusterSetup.html).
+[apache](http://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/ClusterSetup.html).

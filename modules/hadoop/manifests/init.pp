@@ -1,5 +1,5 @@
 class hadoop {
-  $hadoop_version = "2.1.0-beta"
+  $hadoop_version = "2.2.0"
   $hadoop_home = "/opt/hadoop-${hadoop_version}"
   $hadoop_tarball = "hadoop-${hadoop_version}.tar.gz"
   $hadoop_tarball_checksums = "${hadoop_tarball}.mds"
