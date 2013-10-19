@@ -143,12 +143,35 @@ and 1 reduce task at a time.
 Puppet will download the Cascading SDK 2.2-wip and put all SDK
 tools in the `PATH`. The SDK itself can be found in `/opt/CascadingSDK`.
 
+## HBase
+
+This version of the cluster also contains [Apache
+HBase](http://hbase.apache.org). The layout on disk is similar to Hadoop.
+The distributition is in `/opt/hbase-<version>`. You can start the HBase cluster
+like so.
+
+    > sudo start-hbase.sh
+
+Te Hadoop cluster must be running, before you issue this command, since HBase
+requires HDFS to be up and running.
+
+To cluster is shut down like so:
+
+    > sudo stop-hbase.sh
+
+The setup is fully distributed. `hadoop1`, `hadoop2` and `hadoop3` are running a
+[zookeeper](http://zookeeper.apache.org) instance and a region-server each. The HBase
+master is running on the `master` VM.
+
+The webinterface of the master is http://master.local:60010.
+
 ## Hacking & Troubleshooting
 
 ### Storage locations
 
 The namenode stores the `fsimage` in `/srv/hadoop/namenode`. The datanodes  are
 storing all data in `/srv/hadoop/datanode`.
+
 
 ### Puppet
 
