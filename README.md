@@ -169,8 +169,9 @@ The webinterface of the master is http://master.local:60010.
 
 ### Storage locations
 
-The namenode stores the `fsimage` in `/srv/hadoop/namenode`. The datanodes  are
-storing all data in `/srv/hadoop/datanode`.
+The namenode stores the `fsimage` in `/srv/hadoop/namenode`. The datanodes are
+storing all data in `/srv/hadoop/datanode`. The data for the zookeeper servers
+used by hbase is stored in `/srv/zookeeper`.
 
 
 ### Puppet
