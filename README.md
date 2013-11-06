@@ -152,7 +152,7 @@ like so.
 
     > sudo start-hbase.sh
 
-Te Hadoop cluster must be running, before you issue this command, since HBase
+The Hadoop cluster must be running, before you issue this command, since HBase
 requires HDFS to be up and running.
 
 To cluster is shut down like so:
