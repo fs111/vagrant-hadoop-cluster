@@ -2,6 +2,8 @@
 
 . /etc/profile
 
+set +x
+
 export HDFS_USER=hdfs
 export YARN_USER=yarn
 export HISTORY_SERVER_USER=mapred
@@ -25,8 +27,10 @@ done
 # work around https://issues.apache.org/jira/browse/HADOOP-9923
 NEEDS_STAGING_DIR=$(hadoop fs -test -d /tmp/hadoop-yarn/staging > /dev/null 2>&1)
 if $NEEDS_STAGING_DIR; then
-    su - $YARN_USER -c "hadoop fs -mkdir -p /tmp/hadoop-yarn/staging"
+    su - $YARN_USER -c "hadoop fs -mkdir -p /tmp/hadoop-yarn/staging/history/done"
     su - $YARN_USER -c "hadoop fs -chmod -R 777 /tmp/"
 fi
 
 su - $HISTORY_SERVER_USER -c "$HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR"
+
+su - vagrant -c "$HADOOP_PREFIX/bin/hadoop fs -mkdir -p /user/vagrant"
