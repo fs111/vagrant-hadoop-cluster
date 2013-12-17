@@ -32,6 +32,12 @@ class cascading{
     group => root,
     mode => 755,
   }
+
+  file { "/home/vagrant/.cascading":
+    source => "puppet:///modules/cascading/dotcascading",
+    owner => vagrant,
+    group => vagrant,
+  }
   exec { "download_leiningen":
        command => "wget -q https://raw.github.com/technomancy/leiningen/stable/bin/lein -O /opt/tools/bin/lein && chmod +x /opt/tools/bin/lein",
        path => $path,

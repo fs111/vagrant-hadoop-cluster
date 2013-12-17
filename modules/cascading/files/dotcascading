@@ -1,0 +1,2 @@
+# set the cascading platform to hadoop
+cascading.platform.name=hadoop
