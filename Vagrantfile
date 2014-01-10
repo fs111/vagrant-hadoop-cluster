@@ -8,6 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--cpus", "1", "--memory", "512"]
   end
 
+  config.vm.synced_folder "tmp", "/vagrant"
+
   config.vm.define :hadoop1 do |hadoop1|
     hadoop1.vm.network "private_network", ip: "192.168.7.12"
     hadoop1.vm.hostname = "hadoop1.local"
