@@ -123,8 +123,9 @@ you never have to remember any IP nor will you have to fiddle with your
 
 Name resolution works from the host to all VMs and between all VMs as well.  If
 you are using linux, make sure you have `avahi-daemon` installed and it is
-running. On a Mac everything should just work (TM) witouth doing anything. 
-(Windows testers and patches welcome).
+running. On a Mac everything should just work (TM) witouth doing anything.
+Windows users have to install [Bonjour for
+Windows](http://support.apple.com/kb/dl999) before starting the cluster.
 
 The network used is `192.168.7.0/24`. If that causes any problems, change the
 `Vagrantfile` and `modules/avahi/file/hosts` files to something that works for
@@ -210,6 +211,5 @@ case, delete the tarball and the checksum file (`<tarball>.mds`) and rerun
 
 ## Wishlist
 
-- have it working on windows
 - run as other user than root
 - have a way to configure the names/ips in only one file
