@@ -5,5 +5,5 @@ export CASCADING_SDK_HOME=/opt/CascadingSDK
 
 export PATH=$PATH:/opt/tools/bin
 
-export GRADLE_HOME=/opt/tools/gradle-1.6
+export GRADLE_HOME=/opt/tools/gradle-1.10
 export PATH=$GRADLE_HOME/bin:$PATH
