@@ -20,6 +20,13 @@ class cascading{
     require => Exec["download_sdk"]
   }
 
+  exec { "sdk_permissions" :
+    command => "chown -R vagrant /opt/CascadingSDK",
+    path => $path,
+    require => Exec["unpack_sdk"]
+  }
+
+
   file { "/etc/profile.d/ccsdk.sh":
     source => "puppet:///modules/cascading/ccsdk.sh",
     owner => root,
