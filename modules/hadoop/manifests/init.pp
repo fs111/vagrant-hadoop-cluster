@@ -50,11 +50,17 @@ class hadoop {
     require => Exec["verify_tarball"]
   }
 
+  exec { "hadoop_conf_permissions" :
+    command => "chown -R vagrant ${hadoop_home}/conf",
+    path => $path,
+    require => Exec["unpack_hadoop"]
+  }
+
   file {
     "${hadoop_home}/conf/slaves":
       source => "puppet:///modules/hadoop/slaves",
       mode => 644,
-      owner => root,
+      owner => vagrant,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -63,7 +69,7 @@ class hadoop {
     "${hadoop_home}/conf/masters":
       source => "puppet:///modules/hadoop/masters",
       mode => 644,
-      owner => root,
+      owner => vagrant,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -72,7 +78,7 @@ class hadoop {
     "${hadoop_home}/conf/core-site.xml":
       source => "puppet:///modules/hadoop/core-site.xml",
       mode => 644,
-      owner => root,
+      owner => vagrant,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -81,7 +87,7 @@ class hadoop {
     "${hadoop_home}/conf/mapred-site.xml":
       source => "puppet:///modules/hadoop/mapred-site.xml",
       mode => 644,
-      owner => root,
+      owner => vagrant,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -90,7 +96,7 @@ class hadoop {
     "${hadoop_home}/conf/hdfs-site.xml":
       source => "puppet:///modules/hadoop/hdfs-site.xml",
       mode => 644,
-      owner => root,
+      owner => vagrant,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -99,7 +105,7 @@ class hadoop {
     "${hadoop_home}/conf/hadoop-env.sh":
       source => "puppet:///modules/hadoop/hadoop-env.sh",
       mode => 644,
-      owner => root,
+      owner => vagrant,
       group => root,
       require => Exec["unpack_hadoop"]
   }
