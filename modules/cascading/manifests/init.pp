@@ -33,11 +33,18 @@ class cascading{
     mode => 755,
   }
 
-  file { "/home/vagrant/.cascading":
+  file { "/home/vagrant/.cascading/default.properties":
     source => "puppet:///modules/cascading/dotcascading",
     owner => vagrant,
     group => vagrant,
   }
+
+  file { "/home/vagrant/.cascading/":
+    ensure => "directory",
+    owner => vagrant,
+    group => vagrant,
+  }
+
   exec { "download_leiningen":
        command => "wget -q https://raw.github.com/technomancy/leiningen/stable/bin/lein -O /opt/tools/bin/lein && chmod +x /opt/tools/bin/lein",
        path => $path,
@@ -46,16 +53,16 @@ class cascading{
   }
   
   exec { "download_sbt_jar":
-       command => "wget -q http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch//0.12.4/sbt-launch.jar -O /opt/tools/bin/sbt-launch.jar",
+       command => "wget -q http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch//0.13.1/sbt-launch.jar -O /opt/tools/bin/sbt-launch.jar",
        path => $path,
        creates => "/opt/tools/bin/sbt-launch.jar",
        require => File["/opt/tools/bin"],
   }
 
   exec { "download_gradle":  
-       command => "wget -q http://services.gradle.org/distributions/gradle-1.6-bin.zip -O /tmp/gradle.zip && unzip -o /tmp/gradle.zip -d /opt/tools",
+       command => "wget -q http://services.gradle.org/distributions/gradle-1.10-bin.zip -O /tmp/gradle.zip && unzip -o /tmp/gradle.zip -d /opt/tools",
        path => $path,
-       creates => "/opt/tools/gradle-1.6",
+       creates => "/opt/tools/gradle-1.10",
        require => Package["unzip"]
   }
 
