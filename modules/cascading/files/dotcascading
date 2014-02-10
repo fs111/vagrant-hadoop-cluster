@@ -1,2 +1,2 @@
-# set the cascading platform to hadoop
-cascading.platform.name=hadoop
+# set the cascading platform to hadoop2-mr1
+cascading.platform.name=hadoop2-mr1
