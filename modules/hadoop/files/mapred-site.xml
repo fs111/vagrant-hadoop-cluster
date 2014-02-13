@@ -10,8 +10,20 @@
      <name>mapred.tasktracker.map.tasks.maximum</name>
   <value>1</value>
  </property>
-<property>
+ <property>
     <name>mapred.tasktracker.reduce.tasks.maximum</name>
   <value>1</value>
+ </property>
+ <property>
+    <name>mapreduce.jobhistory.address</name>
+  <value>master.local:10020</value>
+ </property>
+ <property>
+    <name>mapreduce.jobhistory.webapp.address</name>
+  <value>master.local:19888</value>
+ </property>
+ <property>
+     <name>mapreduce.framework.name</name>
+     <value>yarn</value>
  </property>
 </configuration>

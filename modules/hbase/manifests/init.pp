@@ -1,7 +1,8 @@
 class hbase {
-  $hbase_version = "0.94.15"
-  $hbase_home = "/opt/hbase-${hbase_version}"
-  $hbase_tarball = "hbase-${hbase_version}.tar.gz"
+  $hbase_version = "0.96.1.1"
+  $hbase_platform = "hadoop2"
+  $hbase_home = "/opt/hbase-${hbase_version}-${hbase_platform}"
+  $hbase_tarball = "hbase-${hbase_version}-${hbase_platform}-bin.tar.gz"
 
   file { "/srv/zookeeper":
     ensure => "directory"

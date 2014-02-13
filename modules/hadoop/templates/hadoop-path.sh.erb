@@ -1,5 +1,10 @@
-# used by most Hadoop tools even though bin/hadoop warns against it
 export HADOOP_HOME_WARN_SUPPRESS="true"
 export HADOOP_HOME=<%=hadoop_home%>
-export HADOOP_CONF_DIR=$HADOOP_HOME/conf
+export HADOOP_YARN_HOME=$HADOOP_HOME
+export HADOOP_PREFIX=$HADOOP_HOME
+export HADOOP_CONF_DIR=<%=hadoop_conf_dir%>
+export YARN_CONF_DIR=<%=hadoop_conf_dir%>
 export PATH=$HADOOP_HOME/bin:$PATH
+export YARN_LOG_DIR=<%=yarn_log_dir%>
+export HADOOP_LOG_DIR=<%=hadoop_log_dir%>
+export HADOOP_MAPRED_LOG_DIR=<%=mapred_log_dir%>
