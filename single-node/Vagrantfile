@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--cpus", "2", "--memory", "1024"]
+    vb.customize ["modifyvm", :id, "--cpus", "2", "--memory", "1536"]
   end
 
   config.vm.define :master do |master|
@@ -22,3 +22,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 end
+
