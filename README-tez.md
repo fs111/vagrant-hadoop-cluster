@@ -3,9 +3,11 @@ This cluster uses hadoop 2.4.0 and tez 0.5.0.
 To bring up the cluster and install tez do this:
 
 boot the cluster:
+
     vagrant up
 
 start hadoop:
+
     vagrant ssh master
     sudo prepare-cluster.sh
     sudo start-all.sh
@@ -14,7 +16,7 @@ compile and deploy tez:
 
     tez deploy
 
-`tez` is a script in /opt/tools/bin which will checkout tez 0.5.0 from git into `/vagrant/tez`, compile it with maven
+`tez` is a script in `/opt/tools/bin` which will checkout tez 0.5.0 from git into `/vagrant/tez`, compile it with maven
 (installed in `/opt/tools/apache-maven-3.2.3/bin/mvn`) and copy it onto HDFS in `/apps/tez-0.5.0`. Note that `/vagrant`
 is the checkout directory of the cluster, so you can also compile tez on the host machine and simply run `tez upload` on
 the cluster, if that is faster for you.
