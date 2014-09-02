@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+if [ ! $# -eq 1 ]
+then
+    echo "usage $0 [build][upload][deploy]"
+    echo -e "\tbuild  - builds tez"
+    echo -e "\tupload - uploads tez to HDFS"
+    echo -e "\tdeploy - builds and uploads tez"
+    exit 1
+fi
+
+echo "working directory: /vagrant"
+cd /vagrant
+
+if [ ! -e "/vagrant/tez" ]
+then
+    git clone https://github.com/apache/tez.git
+fi
+
+cd tez
+
+if [ $1 == "build" -o $1 == "deploy" ]
+then
+    git checkout branch-0.5.0
+    git pull origin branch-0.5.0
+    mvn clean package -DskipTests
+fi
+
+if [ $1 == "upload" -o $1 == "deploy" ]
+then
+    hadoop fs -rm -r -f /apps
+    hadoop fs -mkdir /apps
+    hadoop fs -copyFromLocal tez-dist/target/tez-0.5.0 /apps/tez-0.5.0
+fi
+

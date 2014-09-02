@@ -7,4 +7,5 @@ class{ 'hadoop':
 
 #include hbase
 include avahi
-include cascading
+#include cascading
+include tezdev

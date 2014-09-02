@@ -1,5 +1,6 @@
 include base
-include hadoop
-include hbase
 include avahi
-include cascading
+include hadoop
+include tezdev
+#include hbase
+#include cascading

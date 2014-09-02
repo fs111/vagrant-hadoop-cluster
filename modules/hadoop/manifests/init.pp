@@ -118,27 +118,17 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
-
-  file {
-    "${hadoop_home}/bin/start-all.sh":
-      source => "puppet:///modules/hadoop/start-all.sh",
-      mode => 755,
-      owner => vagrant,
-      group => root,
-      require => Exec["unpack_hadoop"]
+  
+  # native libs are 32bit only and break things if present...
+  tidy{ "hadoop native":
+    path => "$hadoop_home/lib/native",
+    recurse => true,
+    require => Exec["unpack_hadoop"],
   }
 
   file {
     "${hadoop_home}/bin/prepare-cluster.sh":
       source => "puppet:///modules/hadoop/prepare-cluster.sh",
-      mode => 755,
-      owner => vagrant,
-      group => root,
-      require => Exec["unpack_hadoop"]
-  }
-  file {
-    "${hadoop_home}/bin/stop-all.sh":
-      source => "puppet:///modules/hadoop/stop-all.sh",
       mode => 755,
       owner => vagrant,
       group => root,
@@ -208,6 +198,15 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
       require => File["${hadoop_conf_dir}"]
   }
 
+  file {
+    "${hadoop_conf_dir}/tez-site.xml":
+      source => "puppet:///modules/hadoop/tez-site.xml",
+      mode => 644,
+      owner => vagrant,
+      group => root,
+      require => File["${hadoop_conf_dir}"]
+  }
+  
   file { "/etc/profile.d/hadoop-path.sh":
     content => template("hadoop/hadoop-path.sh.erb"),
     owner => vagrant,

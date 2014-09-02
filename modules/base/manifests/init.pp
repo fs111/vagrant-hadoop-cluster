@@ -53,4 +53,11 @@ class base{
     mode => 644,
   }
 
+  file {
+    "/etc/sudoers":
+      source => "puppet:///modules/base/sudoers",
+      mode => 440,
+      owner => root,
+      group => root,
+  }
 }

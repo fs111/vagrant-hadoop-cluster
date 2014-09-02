@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
- <property>
-  <name>mapred.job.tracker</name>
-  <value>master.local:9001</value>
-  <description>The host and port that the MapReduce job tracker runs at.</description>
- </property>
- <property>
-     <name>mapred.tasktracker.map.tasks.maximum</name>
-  <value>1</value>
- </property>
- <property>
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>master.local:9001</value>
+    <description>The host and port that the MapReduce job tracker runs at.</description>
+  </property>
+  <property>
+    <name>mapred.tasktracker.map.tasks.maximum</name>
+    <value>1</value>
+  </property>
+  <property>
     <name>mapred.tasktracker.reduce.tasks.maximum</name>
-  <value>1</value>
- </property>
- <property>
+    <value>1</value>
+  </property>
+  <property>
     <name>mapreduce.jobhistory.address</name>
-  <value>master.local:10020</value>
- </property>
- <property>
+    <value>master.local:10020</value>
+  </property>
+  <property>
     <name>mapreduce.jobhistory.webapp.address</name>
-  <value>master.local:19888</value>
- </property>
- <property>
-     <name>mapreduce.framework.name</name>
-     <value>yarn</value>
- </property>
+    <value>master.local:19888</value>
+  </property>
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn-tez</value>
+  </property>
 </configuration>
