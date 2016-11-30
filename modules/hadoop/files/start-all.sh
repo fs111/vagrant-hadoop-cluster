@@ -35,4 +35,4 @@ fi
 
 su - $HISTORY_SERVER_USER -c "$HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR"
 
-su - vagrant -c "$HADOOP_PREFIX/bin/hadoop fs -mkdir -p /user/vagrant"
+su - ubuntu -c "$HADOOP_PREFIX/bin/hadoop fs -mkdir -p /user/ubuntu"

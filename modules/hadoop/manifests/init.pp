@@ -1,6 +1,6 @@
 class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
 
-  $hadoop_version = "2.6.0"
+  $hadoop_version = "2.7.3"
   $hadoop_home = "/opt/hadoop-${hadoop_version}"
   $hadoop_tarball = "hadoop-${hadoop_version}.tar.gz"
   $hadoop_tarball_checksums = "${hadoop_tarball}.mds"
@@ -41,7 +41,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     timeout => 1800,
     path => $path,
     creates => "/vagrant/$hadoop_tarball",
-    require => [ Package["openjdk-6-jdk"], Exec["download_grrr"]]
+    require => [ Package["openjdk-8-jdk-headless"], Exec["download_grrr"]]
   }
 
   exec { "download_checksum":
@@ -73,7 +73,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
   }
 
   exec { "hadoop_conf_permissions" :
-    command => "chown -R vagrant ${hadoop_conf_dir}",
+    command => "chown -R ubuntu ${hadoop_conf_dir}",
     path => $path,
     require => Exec["unpack_hadoop"]
   }
@@ -114,7 +114,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/slaves":
       source => $_slaves_file,
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
@@ -123,7 +123,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_home}/bin/start-all.sh":
       source => "puppet:///modules/hadoop/start-all.sh",
       mode => 755,
-      owner => vagrant,
+      owner => root,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -132,7 +132,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_home}/bin/prepare-cluster.sh":
       source => "puppet:///modules/hadoop/prepare-cluster.sh",
       mode => 755,
-      owner => vagrant,
+      owner => root,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -140,7 +140,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_home}/bin/stop-all.sh":
       source => "puppet:///modules/hadoop/stop-all.sh",
       mode => 755,
-      owner => vagrant,
+      owner => root,
       group => root,
       require => Exec["unpack_hadoop"]
   }
@@ -149,7 +149,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/masters":
       source => "puppet:///modules/hadoop/masters",
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
@@ -158,7 +158,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/core-site.xml":
       source => "puppet:///modules/hadoop/core-site.xml",
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
@@ -167,7 +167,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/mapred-site.xml":
       source => "puppet:///modules/hadoop/mapred-site.xml",
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
@@ -176,7 +176,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/hdfs-site.xml":
       source => $_hdfs_site_file,
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
@@ -185,7 +185,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/yarn-site.xml":
       source => "puppet:///modules/hadoop/yarn-site.xml",
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
@@ -194,7 +194,7 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/hadoop-env.sh":
       source => "puppet:///modules/hadoop/hadoop-env.sh",
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
@@ -203,14 +203,14 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     "${hadoop_conf_dir}/yarn-env.sh":
       source => "puppet:///modules/hadoop/yarn-env.sh",
       mode => 644,
-      owner => vagrant,
+      owner => ubuntu,
       group => root,
       require => File["${hadoop_conf_dir}"]
   }
 
   file { "/etc/profile.d/hadoop-path.sh":
     content => template("hadoop/hadoop-path.sh.erb"),
-    owner => vagrant,
+    owner => ubuntu,
     group => root,
   }
   group { "hadoop":

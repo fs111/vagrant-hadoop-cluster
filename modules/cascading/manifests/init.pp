@@ -10,7 +10,7 @@ class cascading{
     # S3 can be slow at times hence a longer timeout
     timeout => 1800,
     unless => "ls /opt | grep CascadingSDK",
-    require => Package["openjdk-6-jdk"]
+    require => Package["openjdk-8-jdk-headless"]
   }
 
   exec { "unpack_sdk" :
@@ -21,7 +21,7 @@ class cascading{
   }
 
   exec { "sdk_permissions" :
-    command => "chown -R vagrant /opt/CascadingSDK",
+    command => "chown -R ubuntu /opt/CascadingSDK",
     path => $path,
     require => Exec["unpack_sdk"]
   }
@@ -42,14 +42,12 @@ class cascading{
 
   file { "/home/vagrant/.cascading/default.properties":
     source => "puppet:///modules/cascading/dotcascading",
-    owner => vagrant,
-    group => vagrant,
+    owner => ubunutu,
   }
 
   file { "/home/vagrant/.cascading/":
     ensure => "directory",
-    owner => vagrant,
-    group => vagrant,
+    owner => ubunutu,
   }
 
   exec { "download_leiningen":

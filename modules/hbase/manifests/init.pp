@@ -1,5 +1,5 @@
 class hbase {
-  $hbase_version = "0.98.19"
+  $hbase_version = "0.98.23"
   $hbase_platform = "hadoop2"
   $hbase_home = "/opt/hbase-${hbase_version}-${hbase_platform}"
   $hbase_tarball = "hbase-${hbase_version}-${hbase_platform}-bin.tar.gz"
@@ -13,7 +13,7 @@ class hbase {
     timeout => 1800,
     path => $path,
     creates => "/vagrant/$hbase_tarball",
-    require => [ Package["openjdk-6-jdk"], Exec["download_grrr"]]
+    require => [ Package["openjdk-8-jdk-headless"], Exec["download_grrr"]]
   }
 
   exec { "unpack_hbase" :

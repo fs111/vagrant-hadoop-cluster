@@ -4,8 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "cascading-hadoop-base"
-  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.box = "ubuntu/xenial64"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--cpus", "1", "--memory", "512"]

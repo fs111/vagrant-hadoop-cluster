@@ -7,4 +7,5 @@ class{ 'hadoop':
 
 #include hbase
 include avahi
-include cascading
+include spark
+#include cascading
