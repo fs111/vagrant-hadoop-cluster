@@ -18,7 +18,7 @@ class base{
   file { 
   "/root/.ssh/config":
     source => "puppet:///modules/base/ssh_config",
-    mode => 600,
+    mode => "600",
     owner => root,
     group => root,
   }
@@ -26,7 +26,7 @@ class base{
   file {
     "/root/.ssh/id_rsa":
       source => "puppet:///modules/base/id_rsa",
-      mode => 600,
+      mode => "600",
       owner => root,
       group => root,
   }
@@ -34,7 +34,7 @@ class base{
   file {
     "/root/.ssh/id_rsa.pub":
       source => "puppet:///modules/base/id_rsa.pub",
-      mode => 644,
+      mode => "644",
       owner => root,
       group => root,
   }
@@ -50,7 +50,7 @@ class base{
 
   file { "/etc/motd":
     source => "puppet:///modules/base/motd",
-    mode => 644,
+    mode => "644",
   }
 
 }
