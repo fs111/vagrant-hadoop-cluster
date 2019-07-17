@@ -1,6 +1,6 @@
 class spark() {
-  $spark_version = "1.6.3"
-  $spark_variant = "bin-hadoop2.6"
+  $spark_version = "2.4.3"
+  $spark_variant = "bin-hadoop2.7"
   $spark_home = "/opt/spark-${spark_version}-${spark_variant}"
   $spark_tarball = "spark-${spark_version}-${spark_variant}.tgz"
 

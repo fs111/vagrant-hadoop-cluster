@@ -1,6 +1,6 @@
 class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
 
-  $hadoop_version = "2.7.3"
+  $hadoop_version = "2.8.5"
   $hadoop_home = "/opt/hadoop-${hadoop_version}"
   $hadoop_tarball = "hadoop-${hadoop_version}.tar.gz"
   $hadoop_tarball_checksums = "${hadoop_tarball}.mds"
@@ -44,13 +44,13 @@ class hadoop($slaves_file = undef, $hdfs_site_file = undef) {
     require => [ Package["openjdk-8-jdk-headless"], Exec["download_grrr"]]
   }
 
-  exec { "download_checksum":
-    command => "/tmp/grrr /hadoop/common/hadoop-${hadoop_version}/$hadoop_tarball_checksums -O /vagrant/$hadoop_tarball_checksums --read-timeout=5 --tries=0",
-    timeout => 1800,
-    path => $path,
-    unless => "ls /vagrant | grep ${hadoop_tarball_checksums}",
-    require => Exec["download_grrr"],
-  }
+ # exec { "download_checksum":
+ #   command => "/tmp/grrr /hadoop/common/hadoop-${hadoop_version}/$hadoop_tarball_checksums -O /vagrant/$hadoop_tarball_checksums --read-timeout=5 --tries=0",
+ #   timeout => 1800,
+ #   path => $path,
+ #   unless => "ls /vagrant | grep ${hadoop_tarball_checksums}",
+ #   require => Exec["download_grrr"],
+ # }
 
   file { "/tmp/verifier":
       source => "puppet:///modules/hadoop/verifier",
